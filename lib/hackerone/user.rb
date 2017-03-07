@@ -1,7 +1,7 @@
 require "hackerone/client"
 
 module Hackerone
-  class User
+  class User < OpenStruct
     UserQuery = ::Hackerone::Client.parse <<-'GRAPHQL'
       query($username: String!) {
         user(username: $username) {
@@ -13,16 +13,6 @@ module Hackerone
         }
       }
     GRAPHQL
-
-    attr_accessor :username, :name, :signal, :reputation, :impact
-
-    def initialize(username:, name:, signal:, reputation:, impact:)
-      @username = username
-      @name = name
-      @signal = signal
-      @reputation = reputation
-      @impact = impact
-    end
 
     def self.find_by(username:)
       result = ::Hackerone::Client.query UserQuery, variables: { username: username }
