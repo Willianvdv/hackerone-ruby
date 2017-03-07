@@ -1,5 +1,3 @@
-require "hackerone/client"
-
 module Hackerone
   class User < OpenStruct
     UserQuery = ::Hackerone::Client.parse <<-'GRAPHQL'

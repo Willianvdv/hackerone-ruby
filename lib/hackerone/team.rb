@@ -1,5 +1,3 @@
-require "hackerone/client"
-
 module Hackerone
   class Team < OpenStruct
     TeamQuery = ::Hackerone::Client.parse <<-'GRAPHQL'
