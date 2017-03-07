@@ -12,7 +12,7 @@ module Hackerone
     def self.find_by(handle:)
       result = ::Hackerone::Client.query TeamQuery, variables: { handle: handle }
       team_data = result.data.team.data
-      new(**::Hackerone.symbolize_keys(team_data))
+      new(**team_data.symbolize_keys)
     end
   end
 end
