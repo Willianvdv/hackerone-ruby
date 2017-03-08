@@ -2,7 +2,6 @@ require "graphql/client"
 require "graphql/client/http"
 require 'rubygems'
 require 'httparty'
-require 'pry'
 
 module Hackerone
   class HackyTokenFetcher
