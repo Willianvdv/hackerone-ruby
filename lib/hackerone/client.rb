@@ -13,7 +13,8 @@ module Hackerone
     include HTTParty
 
     base_uri 'https://hackerone.com'
-    debug_output
+
+    debug_output if ENV['HACKERONE_DEBUG']
 
     def initialize(email, password)
       current_user_response = self.class.get(
@@ -49,7 +50,7 @@ module Hackerone
         }
       )
 
-      current_user_response['csrf_token']
+      current_user_response['graphql_token']
     end
 
     private
@@ -86,7 +87,7 @@ module Hackerone
     def headers(_ctx)
       return {} unless Hackerone.credentials_given?
 
-      { "x-auth-token": Hackerone.token }
+      { "X-Auth-Token": Hackerone.token }
     end
   end
 
