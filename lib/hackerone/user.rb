@@ -1,5 +1,3 @@
-require "hackerone/client"
-
 module Hackerone
   class User
     FindUserQuery = ::Hackerone::Client.parse <<-'GRAPHQL'
@@ -45,7 +43,7 @@ module Hackerone
     def self.find_by(username:)
       result = ::Hackerone::Client.query FindUserQuery, variables: { username: username }
       user_data = result.data.user.data
-      new(**::Hackerone.symbolize_keys(user_data))
+      new(**user_data.symbolize_keys)
     end
   end
 end

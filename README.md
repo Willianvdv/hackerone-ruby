@@ -10,12 +10,12 @@ There are no installation instructions yet.
 
 To get an user from HackerOne you can do:
 ```lang=ruby
-::HackerOne::User.find_by(username: 'wvdv')
+irb(main):002:0> Hackerone::User.find_by(username: 'wvdv')
+=> #<Hackerone::User name="Willian", username="wvdv", signal=nil, reputation=102, impact=nil>
 ```
 
 To get a team from HackerOne you can do:
 ```lang=ruby
-::HackerOne::Team.find_by(handle: 'security')
+irb(main):002:0> Hackerone::Team.find_by(handle: 'security')
+=> #<Hackerone::Team handle="security", name="HackerOne">
 ```
-
-

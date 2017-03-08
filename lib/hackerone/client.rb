@@ -1,3 +1,4 @@
+require "active_support/core_ext/hash"
 require "graphql/client"
 require "graphql/client/http"
 require 'rubygems'
