@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Hackerone::Team do
+describe Hackerone::Report do
   describe' .find_by' do
     it 'fetches a report by id' do
       report = Hackerone::Report.find_by id: 211770
