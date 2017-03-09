@@ -63,7 +63,7 @@ module Hackerone
   end
 
   def self.credentials_given?
-    ENV['HACKERONE_EMAIL']
+    ENV['HACKERONE_EMAIL'].present? && ENV['HACKERONE_PASSWORD'].present?
   end
 
   def self.token
@@ -87,7 +87,7 @@ module Hackerone
     def headers(_ctx)
       return {} unless Hackerone.credentials_given?
 
-      { "X-Auth-Token": Hackerone.token }
+      { "X-Auth-Token" => Hackerone.token }
     end
   end
 
