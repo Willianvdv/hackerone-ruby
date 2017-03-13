@@ -4,8 +4,6 @@ module Hackerone
       query($id: Int!) {
         report(id: $id) {
           id
-          title
-          vulnerability_information
         }
       }
     GRAPHQL
