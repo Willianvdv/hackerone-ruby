@@ -1,5 +1,3 @@
-require 'pry'
-
 module Hackerone
   class Report < OpenStruct
     ReportQuery = ::Hackerone::Client.parse <<-'GRAPHQL'
