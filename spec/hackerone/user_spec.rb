@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Hackerone::User do
   describe '.find_by' do
-    it 'fetches my details' do
+    xit 'fetches my details' do
       user = Hackerone::User.me
       expect(user.username).not_to be_nil
     end
