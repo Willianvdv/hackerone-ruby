@@ -2,11 +2,6 @@ require "spec_helper"
 
 describe Hackerone::User do
   describe '.find_by' do
-    xit 'fetches my details' do
-      user = Hackerone::User.me
-      expect(user.username).not_to be_nil
-    end
-
     it 'fetches details of HackerOne\'s demo user' do
       user = Hackerone::User.find_by username: 'demo-member'
       expect(user.name).to eq 'Demo Member'
