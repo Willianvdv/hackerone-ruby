@@ -8,9 +8,17 @@ module Hackerone
           reporter {
             username
           }
+
+          team {
+            handle
+          }
         }
       }
     GRAPHQL
+
+    def team
+      ::Hackerone::Team.find_by handle: data.dig('team', 'handle')
+    end
 
     def reporter
       ::Hackerone::User.find_by username: data.dig('reporter', 'username')

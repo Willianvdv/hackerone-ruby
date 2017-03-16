@@ -14,4 +14,10 @@ describe Hackerone::Report do
 
     expect(report.reporter.username).to be_present
   end
+
+  it 'fetches the team' do
+    report = Hackerone::Report.find_by id: 112935
+
+    expect(report.team.handle).to be_present
+  end
 end
