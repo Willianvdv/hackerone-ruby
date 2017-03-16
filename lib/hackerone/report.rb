@@ -1,5 +1,5 @@
 module Hackerone
-  class Report < OpenStruct
+  class Report < SimpleDelegator
     ReportQuery = ::Hackerone::Client.parse <<-'GRAPHQL'
       query($id: Int!) {
         report(id: $id) {
@@ -13,20 +13,14 @@ module Hackerone
     GRAPHQL
 
     def reporter
-      ::Hackerone::User.find_by username: data[:reporter][:username]
+      ::Hackerone::User.find_by username: data.dig('reporter', 'username')
     end
 
     def self.find_by(id:)
-      result = ::Hackerone::Client.query ReportQuery, variables: { id: id }
-      data = result.data.report.data.deep_symbolize_keys
-      data[:_data] = data
-      new(**data)
-    end
-
-    private
-
-    def data
-      self._data
+      new \
+        ::Hackerone::Client.query(ReportQuery, variables: { id: id })
+        .data
+        .report
     end
   end
 end

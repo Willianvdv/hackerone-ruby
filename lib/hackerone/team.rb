@@ -1,5 +1,5 @@
 module Hackerone
-  class Team < OpenStruct
+  class Team < SimpleDelegator
     TeamQuery = ::Hackerone::Client.parse <<-'GRAPHQL'
       query($handle: String!) {
         team(handle: $handle) {
@@ -10,9 +10,10 @@ module Hackerone
     GRAPHQL
 
     def self.find_by(handle:)
-      result = ::Hackerone::Client.query TeamQuery, variables: { handle: handle }
-      team_data = result.data.team.data
-      new(**team_data.symbolize_keys)
+      new \
+        ::Hackerone::Client.query(TeamQuery, variables: { handle: handle })
+        .data
+        .team
     end
   end
 end
