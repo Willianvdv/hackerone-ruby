@@ -12,6 +12,16 @@ module Hackerone
           team {
             handle
           }
+
+          activities {
+            edges {
+              node {
+                ... on ActivityInterface {
+                   ...Hackerone::Activity::ActivityFragment
+                }
+              }
+            }
+          }
         }
       }
     GRAPHQL
@@ -22,6 +32,13 @@ module Hackerone
 
     def reporter
       ::Hackerone::User.find_by username: data.dig('reporter', 'username')
+    end
+
+    def activities
+      __getobj__.activities.edges.map do |edge|
+        ::Hackerone::Activity.new \
+          ::Hackerone::Activity::ActivityFragment.new(edge.node)
+      end
     end
 
     def self.find_by(id:)
