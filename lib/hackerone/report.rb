@@ -1,9 +1,27 @@
 module Hackerone
   class Report < SimpleDelegator
-    ReportQuery = ::Hackerone::Client.parse <<-'GRAPHQL'
+    ReportAll = ::Hackerone::Client.parse <<-'GRAPHQL'
+      query {
+        reports {
+          edges {
+            node {
+              id
+              _id
+
+              reporter {
+                username
+              }
+            }
+          }
+        }
+      }
+    GRAPHQL
+
+    ReportFindByIdQuery = ::Hackerone::Client.parse <<-'GRAPHQL'
       query($id: Int!) {
         report(id: $id) {
           id
+          _id
 
           reporter {
             username
@@ -42,10 +60,18 @@ module Hackerone
     end
 
     def self.find_by(id:)
-      new \
-        ::Hackerone::Client.query(ReportQuery, variables: { id: id })
-        .data
-        .report
+      response = ::Hackerone::Client.query \
+        ReportFindByIdQuery, variables: { id: id }
+
+      new response.data.report
+    end
+
+    def self.all
+      response = ::Hackerone::Client.query ReportAll
+
+      response.data.reports.edges.map do |edge|
+        new(edge.node)
+      end
     end
   end
 end
